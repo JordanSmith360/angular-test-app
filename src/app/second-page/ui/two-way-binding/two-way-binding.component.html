@@ -1,0 +1,11 @@
+<p>two-way-binding works!</p>
+<p>{{ TwoWayBindingVal }}</p>
+<label>Direct modification of parent: </label>
+<input
+  [ngModel]="TwoWayBindingVal"
+  (ngModelChange)="TwoWayBindingValChange.emit($event)"
+/>
+<br />
+<label>Non-Direct modification of parent: </label>
+<input [ngModel]="TwoWayBindingVal" (ngModelChange)="tempVar = $event" />
+<button (click)="submitUpdate(tempVar)">Submit Update</button>
