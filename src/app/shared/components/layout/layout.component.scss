@@ -1,0 +1,17 @@
+.layout {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  &__header {
+    height: 50px;
+    width: 100%;
+    background-color: grey;
+  }
+
+  &__content {
+    display: flex;
+    flex: 1;
+    background-color: burlywood;
+  }
+}

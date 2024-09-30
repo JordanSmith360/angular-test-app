@@ -1,0 +1,68 @@
+<div>
+  <div>This is the first page</div>
+  <a
+    [routerLink]="['/second-component', pageTwoId]"
+    routerLinkActive="active"
+    ariaCurrentWhenActive="page"
+  >
+    Route to next page
+  </a>
+  <input
+    type="text"
+    name="test"
+    id="test"
+    [(ngModel)]="pageTwoId"
+    placeholder="Enter input for page 2 id"
+  />
+  <br />
+  <mat-slide-toggle>Test</mat-slide-toggle>
+
+  <button (click)="incrementCount()">Click Me</button>
+
+  <br />
+  <div *ngFor="let user of capturedUserDetails">
+    {{ user.name }} {{ user.surname }}
+  </div>
+
+  <br />
+  <form [formGroup]="formControl" (ngSubmit)="onSubmit()">
+    <label for="first-name">First Name: </label>
+    <input id="first-name" type="text" formControlName="name" required />
+    <div
+      *ngIf="
+        formControl.get('name')?.invalid &&
+        (formControl.get('name')?.dirty || formControl.get('name')?.touched)
+      "
+      class="alert"
+    >
+      <div *ngIf="formControl.get('name')?.errors?.['required']">
+        Name is required.
+      </div>
+    </div>
+
+    <label for="last-name">Last Name: </label>
+    <input id="last-name" type="text" formControlName="surname" required />
+
+    <label for="height">Height (cm): </label>
+    <input id="height" type="number" formControlName="heightCm" required />
+
+    <label for="email">email: </label>
+    <input id="email" type="email" formControlName="email" required />
+    <div
+      *ngIf="
+        formControl.get('email')?.invalid &&
+        (formControl.get('email')?.dirty || formControl.get('email')?.touched)
+      "
+      class="alert"
+    >
+      <div *ngIf="formControl.get('email')?.errors?.['required']">
+        Email is required.
+      </div>
+      <div *ngIf="formControl.get('email')?.errors?.['email']">
+        A valid email is required
+      </div>
+    </div>
+
+    <button type="submit" [disabled]="!formControl.valid">Submit</button>
+  </form>
+</div>
