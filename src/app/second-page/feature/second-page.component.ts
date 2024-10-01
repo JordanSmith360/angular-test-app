@@ -16,15 +16,15 @@ import { TwoWayBindingComponent } from '../ui/two-way-binding/two-way-binding.co
   imports: [TwoWayBindingComponent, CommonModule],
 })
 export class SecondPageComponent {
-  idNumber: string = '';
+  idNumber = '';
   names!: SecondPageInterface[];
   catFact: string | undefined;
-  catFactLoading: boolean = false;
+  catFactLoading = false;
 
   constructor(
     private route: ActivatedRoute,
     private secondPageService: SecondPageServiceService,
-    private logger: LoggingServiceService
+    private logger: LoggingServiceService,
   ) {
     this.idNumber = this.route.snapshot.paramMap.get('id') ?? '';
   }

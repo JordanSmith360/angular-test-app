@@ -2,7 +2,9 @@ import {
   HTTP_INTERCEPTORS,
   HttpEvent,
   HttpHandler,
+  HttpHandlerFn,
   HttpInterceptor,
+  HttpInterceptorFn,
   HttpRequest,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -15,12 +17,7 @@ import { LoggingServiceService } from '../logging-service/logging-service.servic
 export class RequestInterceptorService implements HttpInterceptor {
   constructor(private logger: LoggingServiceService) {}
 
-  intercept(
-    req: HttpRequest<any>,
-    next: HttpHandler
-  ): Observable<HttpEvent<any>> {
-    const newReq = req.clone({ setHeaders: { 'my-header': '123' } });
-
+  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     this.logger.logWarning(req);
     return next.handle(req);
   }

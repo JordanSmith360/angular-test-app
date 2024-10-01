@@ -8,7 +8,7 @@ describe('SecondPageComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [SecondPageComponent]
+      declarations: [SecondPageComponent],
     });
     fixture = TestBed.createComponent(SecondPageComponent);
     component = fixture.componentInstance;

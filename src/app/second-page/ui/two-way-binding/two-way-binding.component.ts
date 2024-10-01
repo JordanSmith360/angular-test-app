@@ -17,7 +17,7 @@ export class TwoWayBindingComponent {
   TwoWayBindingVal!: string;
   @Output() TwoWayBindingValChange = new EventEmitter<string>();
 
-  tempVar: string = '';
+  tempVar = '';
 
   @Output() twoWayBindingEvent = new EventEmitter<string>();
   submitUpdate(value: string) {

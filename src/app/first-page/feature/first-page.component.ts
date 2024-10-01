@@ -32,7 +32,7 @@ export class FirstPageComponent {
 
   constructor(
     private counterService: CounterServiceService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
   ) {
     this.formControl = fb.nonNullable.group({
       name: ['', Validators.required],

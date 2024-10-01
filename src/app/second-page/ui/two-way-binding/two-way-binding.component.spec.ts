@@ -8,7 +8,7 @@ describe('TwoWayBindingComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [TwoWayBindingComponent]
+      imports: [TwoWayBindingComponent],
     });
     fixture = TestBed.createComponent(TwoWayBindingComponent);
     component = fixture.componentInstance;
