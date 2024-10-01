@@ -1,17 +1,8 @@
 <div>This is the second page {{ idNumber }}</div>
 
-<a
-  routerLink="/first-component"
-  routerLinkActive="active"
-  ariaCurrentWhenActive="page"
->
-  Route to previous page
-</a>
+<a routerLink="/first-component"> Route to previous page </a>
 
-<app-two-way-binding
-  [(TwoWayBindingVal)]="idNumber"
-  (twoWayBindingEvent)="idNumber = $event"
-/>
+<app-two-way-binding [(TwoWayBindingVal)]="idNumber" (twoWayBindingEvent)="idNumber = $event" />
 
 {{ idNumber }}
 

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import {
   SecondPageInterface,
@@ -13,7 +13,7 @@ import { TwoWayBindingComponent } from '../ui/two-way-binding/two-way-binding.co
   templateUrl: './second-page.component.html',
   styleUrls: ['./second-page.component.scss'],
   standalone: true,
-  imports: [TwoWayBindingComponent, CommonModule],
+  imports: [TwoWayBindingComponent, CommonModule, RouterLink],
 })
 export class SecondPageComponent {
   idNumber = '';
