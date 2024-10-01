@@ -1,13 +1,20 @@
 import { HttpClient } from '@angular/common/http';
 import { computed, inject, Injectable, signal } from '@angular/core';
-import { Observable } from 'rxjs';
-import { environment } from 'src/environments/environment';
+import { catchError, map, Observable, of, retry } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 export interface WeatherItem {
+  id: number;
   date: Date;
   temperatureC: number;
-  termpartureF: number;
+  temperatureF: number;
+  summary: string;
+}
+
+interface UpdateWeatherItem {
+  id: number;
+  date: Date;
+  temperature: number;
   summary: string;
 }
 
@@ -39,8 +46,7 @@ export class WeatherServiceService {
   error = computed(() => this._weatherState().error);
 
   constructor() {
-    this.weather$.pipe(takeUntilDestroyed()).subscribe((weatherItems) => {
-      console.log('Here', weatherItems);
+    this.weather$.subscribe((weatherItems) => {
       this._weatherState.update((state) => ({
         ...state,
         loading: false,
@@ -49,7 +55,73 @@ export class WeatherServiceService {
     });
   }
 
+  updateWeatherItem(item: WeatherItem) {
+    const request: UpdateWeatherItem = {
+      id: item.id,
+      date: item.date,
+      temperature: item.temperatureC,
+      summary: item.summary,
+    };
+
+    this.http
+      .put('weather', request)
+      .pipe(
+        catchError((err) => {
+          console.log('error', err);
+          return of();
+        }),
+      )
+      .subscribe((t) => {
+        const list = this.weatherItems();
+        const updateItemIndex = list.findIndex((x) => x.id == item.id);
+        list[updateItemIndex] = item;
+
+        this._weatherState.update((state) => ({
+          ...state,
+          weatherItems: list,
+        }));
+      });
+  }
+
+  deleteWeatherItem(id: number) {
+    this.http
+      .delete(`weather?id=${id}`)
+      .pipe(
+        catchError((err) => {
+          console.log('error', err);
+          return of();
+        }),
+      )
+      .subscribe((t) => {
+        const list = this.weatherItems().filter((x) => x.id !== id);
+        this._weatherState.update((state) => ({
+          ...state,
+          weatherItems: list,
+        }));
+      });
+  }
+
   private getWeather(): Observable<WeatherItem[]> {
-    return this.http.get<WeatherItem[]>(`${environment.url}/weather`);
+    return this.http.get<WeatherItem[]>(`weather`).pipe(
+      retry({
+        count: 2,
+        delay: 2000,
+      }),
+      catchError(() => {
+        this._weatherState.update((state) => ({
+          ...state,
+          error: 'An error has occured',
+        }));
+        return of([]);
+      }),
+      map((items) =>
+        items.map((x) => ({
+          ...x,
+          temperatureC: Math.round(x.temperatureC * 100) / 100,
+          temperatureF: Math.round(x.temperatureF * 100) / 100,
+        })),
+      ),
+      takeUntilDestroyed(),
+    );
   }
 }

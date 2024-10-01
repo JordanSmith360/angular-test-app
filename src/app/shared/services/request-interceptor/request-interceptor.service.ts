@@ -10,6 +10,7 @@ import {
 import { Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 import { LoggingServiceService } from '../logging-service/logging-service.service';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -18,8 +19,9 @@ export class RequestInterceptorService implements HttpInterceptor {
   constructor(private logger: LoggingServiceService) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    this.logger.logWarning(req);
-    return next.handle(req);
+    const modifiedRequest = req.clone({ url: `${environment.url}${req.url}` });
+    this.logger.logWarning(modifiedRequest);
+    return next.handle(modifiedRequest);
   }
 }
 

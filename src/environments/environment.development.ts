@@ -1,3 +1,3 @@
 export const environment = {
-  url: 'https://meowfacts.herokuapp.com/',
+  url: 'https://localhost:5001/',
 };

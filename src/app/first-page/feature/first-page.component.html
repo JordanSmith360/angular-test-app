@@ -1,5 +1,8 @@
 <div>
   <div>This is the first page</div>
+  <a routerLink="/" routerLinkActive="active" ariaCurrentWhenActive="page">
+    Route to previous page
+  </a>
   <a
     [routerLink]="['/second-component', pageTwoId]"
     routerLinkActive="active"
@@ -20,9 +23,7 @@
   <button (click)="incrementCount()">Click Me</button>
 
   <br />
-  <div *ngFor="let user of capturedUserDetails">
-    {{ user.name }} {{ user.surname }}
-  </div>
+  <div *ngFor="let user of capturedUserDetails">{{ user.name }} {{ user.surname }}</div>
 
   <br />
   <form [formGroup]="formControl" (ngSubmit)="onSubmit()">
@@ -35,9 +36,7 @@
       "
       class="alert"
     >
-      <div *ngIf="formControl.get('name')?.errors?.['required']">
-        Name is required.
-      </div>
+      <div *ngIf="formControl.get('name')?.errors?.['required']">Name is required.</div>
     </div>
 
     <label for="last-name">Last Name: </label>
@@ -55,12 +54,8 @@
       "
       class="alert"
     >
-      <div *ngIf="formControl.get('email')?.errors?.['required']">
-        Email is required.
-      </div>
-      <div *ngIf="formControl.get('email')?.errors?.['email']">
-        A valid email is required
-      </div>
+      <div *ngIf="formControl.get('email')?.errors?.['required']">Email is required.</div>
+      <div *ngIf="formControl.get('email')?.errors?.['email']">A valid email is required</div>
     </div>
 
     <button type="submit" [disabled]="!formControl.valid">Submit</button>

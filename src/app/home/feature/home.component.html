@@ -1,1 +1,13 @@
-<p>home works!</p>
+<div style="display: flex; flex-direction: column">
+  <h1 *ngIf="weatherService.loading()">Loading</h1>
+  <h1 *ngIf="weatherService.error()">An error has occured</h1>
+  <div style="display: flex">
+    <app-weather-cards
+      *ngFor="let item of weatherService.weatherItems(); trackBy: trackByItems"
+      [weatherItem]="item"
+      (updateItemEvent)="onUpdateOfItem($event)"
+      (removeItemEvent)="onDeletionOfItem($event)"
+    />
+  </div>
+  <!-- <button mat-button (click)="onAddItem()">Add</button> -->
+</div>
